@@ -6,7 +6,7 @@ $edit = $koneksi->query("SELECT * FROM mahasiswa WHERE nim = '$id'");
 $data = $edit->fetch_assoc();
 ?>
  
-<form action="proses.php" method="POST">
+<form action="mahasiswa/proses.php" method="POST">
     <input type="text" name="nim" value="<?= $data['nim'] ?>" hidden>
     <div class="mb-3">
       <label for="nama" class="form-label">Nama</label>
@@ -20,6 +20,19 @@ $data = $edit->fetch_assoc();
       <label for="alamat" class="form-label">Alamat</label>
       <textarea class="form-control" name="alamat" id="exampleFormControlTextarea1" rows="3"><?= $data['alamat'] ?></textarea>
     </div>
+    
+    <select name="id_program_studi" class="form-control" required>
+  <?php
+    $prodi = $koneksi->query("SELECT * FROM program_studi");
+    while ($p = $prodi->fetch_assoc()):
+      $selected = ($p['id'] == $data['id_program_studi']) ? 'selected' : '';
+  ?>
+    <option value="<?= $p['id']; ?>" <?= $selected; ?>>
+      <?= $p['nama_prodi']; ?>
+    </option>
+  <?php endwhile; ?>
+</select>
+
     <div class="mb-3">
         <input type="submit" name="update" class="btn btn-primary" value="Submit"> 
         <a href="list.php" class="btn btn-secondary">List Mahasiswa</a>

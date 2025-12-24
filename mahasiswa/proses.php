@@ -1,6 +1,6 @@
 <?php
 // require: jika file koneksi error, script akan berhenti
-require 'koneksi.php';
+require '../koneksi.php';
 
 // blok kode untuk menyimpan data (CREATE)
 if (isset($_POST['submit'])) {
@@ -8,14 +8,16 @@ if (isset($_POST['submit'])) {
     $nama = $_POST['nama_mhs'];
     $tgl = $_POST['tgl_lahir'];
     $alamat = $_POST['alamat'];
+    $id_program_studi = $_POST['id_program_studi'];
 
-    $sql = "INSERT INTO mahasiswa(nim, nama_mhs, tgl_lahir, alamat)
-            VALUES ('$nim', '$nama', " . ($tgl !== '' ? "'$tgl'" : "NULL") . ", '$alamat')";
+
+    $sql = "INSERT INTO mahasiswa(nim, nama_mhs, tgl_lahir, alamat, id_program_studi)
+            VALUES ('$nim', '$nama', " . ($tgl !== '' ? "'$tgl'" : "NULL") . ", '$alamat','$id_program_studi')";
     $query = $koneksi->query($sql);
 
     if ($query) {
         // sukses -> kembali ke daftar mahasiswa
-        header('Location: index.php?p=mahasiswa');
+        header('Location: ../index.php?p=mahasiswa');
         exit;
     } else {
         echo "Gagal menyimpan data: " . $koneksi->error;
@@ -28,6 +30,7 @@ if (isset($_POST['update'])) {
     $nama = $_POST['nama_mhs'];
     $tgl = $_POST['tgl_lahir'];
     $alamat = $_POST['alamat'];
+    
 
     $sql = "UPDATE mahasiswa SET
                 nama_mhs = '$nama',
@@ -37,7 +40,7 @@ if (isset($_POST['update'])) {
     $query = $koneksi->query($sql);
 
     if ($query) {
-        header('Location: index.php?p=mahasiswa');
+        header('Location: ../index.php?p=mahasiswa');
         exit;
     } else {
         echo "Gagal mengubah data: " . $koneksi->error;
@@ -51,7 +54,7 @@ if (isset($_GET['aksi']) && $_GET['aksi'] === 'hapus' && isset($_GET['nim'])) {
     $query = $koneksi->query("DELETE FROM mahasiswa WHERE nim = '$nim'");
 
     if ($query) {
-        header('Location: index.php?p=mahasiswa');
+        header('Location: ../index.php?p=mahasiswa');
         exit;
     } else {
         echo "Gagal menghapus data: " . $koneksi->error;

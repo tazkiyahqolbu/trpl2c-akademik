@@ -1,6 +1,10 @@
+<?php
+require 'koneksi.php';
+?>
+
 <h1>Tambah Mahasiswa</h1>
 
-<form action="proses.php" method="post">
+<form action="mahasiswa/proses.php" method="post">
   <div class="mb-3">
     <label class="form-label">NIM</label>
     <input type="text" name="nim" class="form-control" required>
@@ -20,6 +24,24 @@
     <label class="form-label">Alamat</label>
     <textarea name="alamat" rows="3" class="form-control"></textarea>
   </div>
+
+<div class="mb-3">
+  <label class="form-label">Program Studi</label>
+  <select name="id_program_studi" class="form-control" required>
+    <option value="">-- Pilih Program Studi --</option>
+
+    <?php
+      $prodi = $koneksi->query("SELECT * FROM program_studi");
+      while ($p = $prodi->fetch_assoc()):
+    ?>
+      <option value="<?= $p['id']; ?>">
+        <?= $p['nama_prodi']; ?> (<?= $p['jenjang']; ?>)
+      </option>
+    <?php endwhile; ?>
+
+  </select>
+</div>
+
 
   <button type="submit" name="submit" class="btn btn-primary">Simpan</button>
   <a href="index.php?p=mahasiswa" class="btn btn-secondary">Kembali</a>

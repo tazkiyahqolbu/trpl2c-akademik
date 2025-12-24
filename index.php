@@ -11,10 +11,10 @@
   <div class="container">
     <a class="navbar-brand" href="#">DB Akademik</a>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="index.php?p=mahasiswa">Mahasiswa</a></li>
-        <li class="nav-item"><a class="nav-link" href="index.php?p=create">Tambah Mahasiswa</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.php?p=program_studi">Program Studi</a></li>
       </ul>
     </div>
   </div>
@@ -25,9 +25,12 @@
       $page = isset($_GET['p']) ? $_GET['p'] : 'home';
       
       if ($page == 'home') include 'home.php';
-      elseif ($page == 'mahasiswa') include 'list.php';
-      elseif ($page == 'create') include 'create.php';
-      elseif ($page == 'edit') include 'edit.php';
+      elseif ($page == 'mahasiswa') include 'mahasiswa/list.php';
+      elseif ($page == 'create') include 'mahasiswa/create.php';
+      elseif ($page == 'edit') include 'mahasiswa/edit.php';
+      elseif ($page == 'program_studi') include 'program_studi/list.php';
+      elseif ($page == 'create_program_studi') include 'program_studi/create.php';
+      elseif ($page == 'edit_program_studi') include 'program_Studi/edit.php';
       else include 'home.php';
     ?>
   </div>
