@@ -1,19 +1,28 @@
-<h1>List Data Mahasiswa</h1>
-<a href="index.php?p=create" class="btn btn-primary">Tambah Data</a>
-<br></br>
+<div class="card shadow-sm">
+  <div class="card-body">
 
-<table class="table table-hover table-striped table-bordered">
-  <thead>
-    <tr>
-      <th>No</th>
-      <th>NIM</th>
-      <th>Nama Mahasiswa</th>
-      <th>Tanggal Lahir</th>
-      <th>Alamat</th>
-      <th>Prodi</th>
-      <th>Aksi</th>
-    </tr>
-  </thead>
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h4 class="mb-0">List Data Mahasiswa</h4>
+      <a href="index.php?p=create" class="btn btn-primary">
+        Tambah Data
+      </a>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th width="50">No</th>
+            <th>NIM</th>
+            <th>Nama Mahasiswa</th>
+            <th>Tanggal Lahir</th>
+            <th>Alamat</th>
+            <th>Prodi</th>
+            <th width="120">Aksi</th>
+          </tr>
+        </thead>
 
   <tbody>
     <?php 
