@@ -1,40 +1,60 @@
-<h1>Input Mahasiswa</h1>
+<h1>Edit Mahasiswa</h1>
+
 <?php 
-require 'koneksi.php'; //memasukkan file koneksi.php agar bisa menggunakan variabel $koneksi
+require 'koneksi.php';
 $id = $_GET['key'];
 $edit = $koneksi->query("SELECT * FROM mahasiswa WHERE nim = '$id'");
 $data = $edit->fetch_assoc();
 ?>
- 
+
 <form action="mahasiswa/proses.php" method="POST">
-    <input type="text" name="nim" value="<?= $data['nim'] ?>" hidden>
-    <div class="mb-3">
-      <label for="nama" class="form-label">Nama</label>
-      <input type="text" class="form-control" id="exampleFormControlInput1" name="nama_mhs" value="<?= $data['nama_mhs'] ?>" required>
-    </div>
-    <div class="mb-3">
-      <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-      <input type="date" class="form-control" id="exampleFormControlInput1" name="tgl_lahir" value="<?= $data['tgl_lahir'] ?>">
-    </div>
-    <div class="mb-3">
-      <label for="alamat" class="form-label">Alamat</label>
-      <textarea class="form-control" name="alamat" id="exampleFormControlTextarea1" rows="3"><?= $data['alamat'] ?></textarea>
-    </div>
-    
-    <select name="id_program_studi" class="form-control" required>
-  <?php
-    $prodi = $koneksi->query("SELECT * FROM program_studi");
-    while ($p = $prodi->fetch_assoc()):
-      $selected = ($p['id'] == $data['id_program_studi']) ? 'selected' : '';
-  ?>
-    <option value="<?= $p['id']; ?>" <?= $selected; ?>>
-      <?= $p['nama_prodi']; ?>
-    </option>
-  <?php endwhile; ?>
-</select>
+    <!-- primary key -->
+    <input type="hidden" name="nim" value="<?= $data['nim'] ?>">
 
     <div class="mb-3">
-        <input type="submit" name="update" class="btn btn-primary" value="Submit"> 
-        <a href="list.php" class="btn btn-secondary">List Mahasiswa</a>
+      <label class="form-label">Nama</label>
+      <input 
+        type="text" 
+        name="nama_mhs" 
+        class="form-control" 
+        value="<?= $data['nama_mhs'] ?>" 
+        required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Tanggal Lahir</label>
+      <input 
+        type="date" 
+        name="tgl_lahir" 
+        class="form-control" 
+        value="<?= $data['tgl_lahir'] ?>">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Alamat</label>
+      <textarea 
+        name="alamat" 
+        class="form-control" 
+        rows="3"><?= $data['alamat'] ?></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Program Studi</label>
+      <select name="id_program_studi" class="form-control" required>
+        <?php
+          $prodi = $koneksi->query("SELECT * FROM program_studi");
+          while ($p = $prodi->fetch_assoc()):
+            $selected = ($p['id'] == $data['id_program_studi']) ? 'selected' : '';
+        ?>
+          <option value="<?= $p['id']; ?>" <?= $selected; ?>>
+            <?= $p['nama_prodi']; ?>
+          </option>
+        <?php endwhile; ?>
+      </select>
+    </div>
+
+    <div class="d-flex gap-2">
+      <button type="submit" name="update" class="btn btn-primary">Update</button>
+      <a href="index.php?p=mahasiswa" class="btn btn-secondary">Kembali</a>
     </div>
 </form>
