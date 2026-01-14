@@ -46,22 +46,34 @@ if(!isset($_SESSION['login']))//variabel super global
         <li class="nav-item">
           <a class="nav-link" href="index.php?p=program_studi">Program Studi</a>
         </li>
-
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown">
+          <a class="nav-link dropdown-toggle fw-semibold"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown">
             <?= $_SESSION['nama_lengkap']; ?>
           </a>
-          <ul class="dropdown-menu dropdown-menu-end">
+
+          <ul class="dropdown-menu dropdown-menu-end shadow">
+            <li>
+              <a class="dropdown-item" href="profil.php">Profil</a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
             <li>
               <a class="dropdown-item text-danger"
-                 href="logout.php"
-                 onclick="return confirm('Yakin ingin logout?')">
+                href="logout.php"
+                onclick="return confirm('Yakin ingin logout?')">
                 Logout
               </a>
             </li>
           </ul>
         </li>
+
+  </ul>
+</li>
+
       </ul>
+      
     </div>
 
   </div>

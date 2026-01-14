@@ -1,25 +1,31 @@
-<div class="card shadow-sm">
-  <div class="card-body">
+<div class="card shadow-sm border-0 rounded-4">
+  <div class="card-body p-4">
 
     <!-- HEADER -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-      <h4 class="mb-0">List Data Program Studi</h4>
+      <div>
+        <h4 class="mb-1">Data Program Studi</h4>
+        <small class="text-muted">
+          Daftar program studi yang tersedia dalam sistem akademik
+        </small>
+      </div>
       <a href="index.php?p=create_program_studi" class="btn btn-primary">
-        Tambah Data
+        + Tambah Data
       </a>
     </div>
 
     <!-- TABLE -->
     <div class="table-responsive">
-      <table class="table table-bordered table-hover align-middle mb-0">
+      <table class="table table-hover align-middle mb-0">
+
         <thead class="table-light">
           <tr>
-            <th width="50">No</th>
-            <th>Nama Prodi</th>
-            <th width="120">Jenjang</th>
-            <th width="120">Akreditasi</th>
+            <th class="text-center" width="50">No</th>
+            <th>Nama Program Studi</th>
+            <th class="text-center" width="120">Jenjang</th>
+            <th class="text-center" width="120">Akreditasi</th>
             <th>Keterangan</th>
-            <th width="120">Aksi</th>
+            <th class="text-center" width="140">Aksi</th>
           </tr>
         </thead>
 
@@ -31,20 +37,24 @@
             while ($data = mysqli_fetch_assoc($tampil)) {
           ?>
           <tr>
-            <td><?= $no++ ?></td>
-            <td><?= $data['nama_prodi']; ?></td>
-            <td><?= $data['jenjang']; ?></td>
-            <td><?= $data['akreditasi']; ?></td>
-            <td><?= $data['keterangan']; ?></td>
-            <td>
+            <td class="text-center"><?= $no++ ?></td>
+            <td class="fw-semibold"><?= $data['nama_prodi']; ?></td>
+            <td class="text-center"><?= $data['jenjang']; ?></td>
+            <td class="text-center">
+              <span class="badge bg-info text-dark">
+                <?= $data['akreditasi']; ?>
+              </span>
+            </td>
+            <td><?= $data['keterangan'] ?: '-'; ?></td>
+            <td class="text-center">
               <a href="index.php?key=<?= $data['id']; ?>&p=edit_program_studi"
                  class="btn btn-warning btn-sm">
-                 Edit
+                Edit
               </a>
               <a href="program_studi/proses.php?id=<?= $data['id']; ?>&aksi=hapus"
                  class="btn btn-danger btn-sm"
                  onclick="return confirm('Yakin ingin menghapus data ini?')">
-                 Hapus
+                Hapus
               </a>
             </td>
           </tr>

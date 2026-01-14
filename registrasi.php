@@ -1,26 +1,27 @@
 <?php
-session_start();
 require 'koneksi.php';
 
 $error = '';
+$success = '';
 
-if (isset($_POST['login'])) {
+if (isset($_POST['daftar'])) {
+  $nama  = $_POST['nama_lengkap'];
   $email = $_POST['email'];
   $pass  = md5($_POST['password']);
 
-  $ceklogin = $koneksi->query(
-    "SELECT nama_lengkap FROM pengguna 
-     WHERE email='$email' AND password='$pass'"
+  // cek email sudah terdaftar
+  $cek = $koneksi->query(
+    "SELECT email FROM pengguna WHERE email='$email'"
   );
 
-  if ($ceklogin->num_rows == 1) {
-    $_SESSION['login'] = true;
-    $_SESSION['email'] = $email;
-    $_SESSION['nama_lengkap'] = $ceklogin->fetch_row()[0];
-    header("Location: index.php");
-    exit;
+  if ($cek->num_rows > 0) {
+    $error = "Email sudah terdaftar";
   } else {
-    $error = "Email atau password salah";
+    $koneksi->query(
+      "INSERT INTO pengguna (nama_lengkap, email, password)
+       VALUES ('$nama','$email','$pass')"
+    );
+    $success = "Registrasi berhasil, silakan login";
   }
 }
 ?>
@@ -29,7 +30,7 @@ if (isset($_POST['login'])) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Login | Sistem Informasi Akademik</title>
+  <title>Registrasi | Sistem Informasi Akademik</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -40,26 +41,26 @@ if (isset($_POST['login'])) {
 
     <div class="col-12 col-sm-10 col-md-8 col-lg-5 col-xl-4">
 
-      <!-- JUDUL SISTEM -->
+      <!-- JUDUL -->
       <div class="text-center mb-4">
         <h4 class="fw-bold mb-1">Sistem Informasi Akademik</h4>
         <p class="text-muted mb-0">Aplikasi Pengelolaan Data Akademik</p>
       </div>
 
-      <!-- CARD LOGIN -->
+      <!-- CARD REGISTER -->
       <div class="card shadow-sm border-0 rounded-4">
         <div class="card-body p-4">
 
           <!-- AVATAR -->
           <div class="text-center mb-3">
-            <div class="rounded-circle bg-primary text-white
+            <div class="rounded-circle bg-success text-white
                         d-inline-flex align-items-center justify-content-center"
                  style="width:80px;height:80px;font-size:32px;">
               👤
             </div>
           </div>
 
-          <h5 class="text-center mb-4">Login Pengguna</h5>
+          <h5 class="text-center mb-4">Registrasi Pengguna</h5>
 
           <?php if ($error): ?>
             <div class="alert alert-danger text-center">
@@ -67,7 +68,23 @@ if (isset($_POST['login'])) {
             </div>
           <?php endif; ?>
 
+          <?php if ($success): ?>
+            <div class="alert alert-success text-center">
+              <?= $success; ?>
+            </div>
+          <?php endif; ?>
+
+          <?php if (!$success): ?>
           <form method="post">
+
+            <div class="mb-3">
+              <label class="form-label">Nama Lengkap</label>
+              <input type="text"
+                     name="nama_lengkap"
+                     class="form-control"
+                     placeholder="Masukkan nama lengkap"
+                     required>
+            </div>
 
             <div class="mb-3">
               <label class="form-label">Email</label>
@@ -89,18 +106,19 @@ if (isset($_POST['login'])) {
 
             <div class="d-grid">
               <button type="submit"
-                      name="login"
-                      class="btn btn-primary">
-                Masuk
+                      name="daftar"
+                      class="btn btn-success">
+                Daftar
               </button>
             </div>
 
           </form>
+          <?php endif; ?>
 
           <p class="text-center mt-3 mb-0">
-            Belum punya akun?
-            <a href="registrasi.php" class="fw-semibold text-decoration-none">
-              Daftar di sini
+            Sudah punya akun?
+            <a href="login.php" class="fw-semibold text-decoration-none">
+             Masuk
             </a>
           </p>
 
